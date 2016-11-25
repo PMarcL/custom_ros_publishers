@@ -2,6 +2,15 @@
 #include "std_msgs/String.h"
 #include <sstream>
 
+/*
+ * Premier brainstorm: on a 180 degrees de vision sur chaque laser
+ * SICK. Le laser envoie 75 beams par tour. On capture les beams avec une resolution
+ * de 1 degre. Dans le fichier chaque ligne represente un scan (un tour de 180 degre).
+ * chaque colonne de la ligne represente le range trouvee a cet angle (si il y a eu
+ * un retour!). Le timestamp de ce tour est dans un autre fichier........ Rien de trop
+ * compliquer; a partir des donnees angulaires et du range, on constuit un nuage de point
+ * pour chaque ligne de retour, et on l'envoie en message avec le timestamp.
+ */
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "imu_publisher");
