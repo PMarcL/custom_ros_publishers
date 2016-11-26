@@ -4,6 +4,7 @@ project(imu_publisher)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
+  sensor_msgs
 )
 
 catkin_package()
