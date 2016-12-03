@@ -27,7 +27,7 @@ struct IMU_data_frame {
 	double z;
 };
 
-static const char* IMU_DATA_FILE = "./data/malaga-urban-dataset-extract-15_all-sensors_IMU.txt";
+static const char* IMU_DATA_FILE = "/home/jft/Desktop/custom_ros_publishers/devel/lib/imu_publisher/data/malaga-urban-dataset-extract-15_all-sensors_IMU.txt";
 
 void read_imu_data(const char* filename, vector<IMU_data_frame>& data_frames);
 
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "imu_publisher");
   ros::NodeHandle n;
   ros::Publisher imu_publisher = n.advertise<sensor_msgs::Imu>("imu/data_raw", 1000);
-  ros::Rate loop_rate(500);
+  ros::Rate loop_rate(100.001);
 
 	vector<IMU_data_frame> data_frames = vector<IMU_data_frame>();
 	read_imu_data(IMU_DATA_FILE, data_frames);
@@ -85,9 +85,6 @@ void read_imu_data(const char* filename, vector<IMU_data_frame>& data_frames) {
 	getline(file, current_line);
 
 	while(getline(file, current_line)) {
-		ROS_INFO("reading line");
-		// TODO remove this line, only use to debug
-		cout << current_line << endl;
 		IMU_data_frame current_frame;
 
 		istringstream line_stream(current_line);
