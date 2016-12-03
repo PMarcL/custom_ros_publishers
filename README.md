@@ -11,6 +11,20 @@ You need to have ROS installed in order to compile this project. We used ROS ind
     git clone https://github.com/PMarcL/custom_ros_publishers.git
     cd ..
     catkin_make
+
+## Recording data ##
+To record the data broadcasted by our publishers and generate a .bag file, you need to run the following commands in multiple terminals:
+#### Terminal 1:
+    
+    roscore
+
+#### Terminal 2:
+
+    rosbag -a -x "/rosout(.*)"
+    
+#### Terminal 3:
+
+    rosrun imu_publisher imu_publisher
     
 ## References ##
 
