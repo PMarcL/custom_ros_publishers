@@ -2,7 +2,9 @@
 #include "sensor_msgs/LaserScan.h"
 #include "std_msgs/String.h"
 #include <fstream>
+#include <iostream>
 #include <sstream>
+#include <string>
 
 /*
  * Premier brainstorm: on a 180 degrees de vision sur chaque laser
@@ -19,7 +21,7 @@ std::vector<std::string> Split(const std::string &s, char delim);
 std::vector<float> str_to_scan(std::string str);
 
 int main(int argc, char** argv) {
-  if (argc != 2)
+  if (argc != 3)
   {
     // path_to_scan path_to_time
     std::cout << "Bad number of arguments" << std::endl;
@@ -41,16 +43,15 @@ int main(int argc, char** argv) {
   double intensities[num_readings];
 
   int count = 0;
-  ros::Rate r(1.0);
+  ros::Rate r(laser_frequency);
   while(n.ok() && std::getline(file_scan, line_scan) && std::getline(file_scan_time, line_time)){
-    //generate some fake data for our laser scan
-    for(unsigned int i = 0; i < num_readings; ++i){
-      ranges[i] = count;
-      intensities[i] = 100 + count;
-    }
-    // TODO mettre le "faux" temps a la place
-    unsigned int scan_time_UNIX = 0;
+    std::cout << "TEST" << std::endl;
+
+    std::vector<std::string> ranges = Split(line_scan, ' ');
+    std::cout << "Premiere lecture : " << ranges[0];
+    double scan_time_UNIX = std::stod(line_time);
     ros::Time scan_time(scan_time_UNIX);
+    std::cout << " temps UNIX : " << scan_time_UNIX << std::endl;
 
     // populate the LaserScan message
     sensor_msgs::LaserScan scan;
@@ -68,7 +69,7 @@ int main(int argc, char** argv) {
     scan.ranges.resize(num_readings);
     // TODO populer a l'aide du fichier texte
     for(unsigned int i = 0; i < num_readings; ++i){
-      scan.ranges[i] = ranges[i];
+      scan.ranges[i] = std::stod(ranges[i]);
     }
 
     scan_pub.publish(scan);

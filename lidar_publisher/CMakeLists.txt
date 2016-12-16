@@ -18,3 +18,4 @@ file(COPY ./data DESTINATION ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_BIN_DESTINA
 add_executable(lidar_publisher src/lidar_publisher.cpp)
 target_link_libraries(lidar_publisher ${catkin_LIBRARIES})
 add_dependencies(lidar_publisher lidar_publisher_generate_messages_cpp)
+set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
