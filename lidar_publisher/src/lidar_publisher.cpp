@@ -11,7 +11,7 @@
  * SICK. Le laser envoie 75 beams par tour. On capture les beams avec une resolution
  * de 1 degre. Dans le fichier chaque ligne represente un scan (un tour de 180 degre).
  * chaque colonne de la ligne represente le range trouvee a cet angle (si il y a eu
- * un retour! 0 sinon). NB: on a 181 mesures, on prend une mesure a 0 degre. 
+ * un retour! 0 sinon). NB: on a 181 mesures, on prend une mesure a 0 degre.
  * Le timestamp de ce tour est dans un autre fichier........ Rien de trop
  * complique; a partir des donnees angulaires et du range, on constuit un message
  * pour chaque ligne de retour, et on l'envoie avec le timestamp.
@@ -27,6 +27,7 @@ int main(int argc, char** argv) {
     std::cout << "Bad number of arguments" << std::endl;
     return 1;
   }
+
   std::ifstream file_scan(argv[1]);
   std::ifstream file_scan_time(argv[2]);
   std::string line_scan;
@@ -44,6 +45,7 @@ int main(int argc, char** argv) {
 
   int count = 0;
   ros::Rate r(laser_frequency);
+
   while(n.ok() && std::getline(file_scan, line_scan) && std::getline(file_scan_time, line_time)){
     std::cout << "TEST" << std::endl;
 
@@ -75,6 +77,7 @@ int main(int argc, char** argv) {
     scan_pub.publish(scan);
     ++count;
     r.sleep();
+    ROS_INFO("send an IMU message");
   }
 }
 

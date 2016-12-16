@@ -1,0 +1,2 @@
+rosrun lidar_publisher lidar_publisher /home/jft/Desktop/custom_ros_publishers/src/lidar_publisher/data/malaga-urban-dataset-extract-05_all-sensors_LASER1.txt /home/jft/Desktop/custom_ros_publishers/src/lidar_publisher/data/malaga-urban-dataset-extract-05_all-sensors_LASER1_times.txt
+rosrun lidar_publisher lidar_publisher /home/jft/Desktop/custom_ros_publishers/src/lidar_publisher/data/malaga-urban-dataset-extract-05_all-sensors_LASER1.txt /home/jft/Desktop/custom_ros_publishers/src/lidar_publisher/data/malaga-urban-dataset-extract-05_all-sensors_LASER1_times.txt
