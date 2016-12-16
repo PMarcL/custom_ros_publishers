@@ -46,8 +46,7 @@ int main(int argc, char **argv)
 
   unsigned long i = 0;
 
-  while (!ros::ok() && i < data_frames.size())
-		{
+  while (ros::ok() && i < data_frames.size()) {
 		IMU_data_frame current_frame = data_frames[i];
 		sensor_msgs::Imu imu_msg = sensor_msgs::Imu();
 
