@@ -1,5 +1,7 @@
 #include "ros/ros.h"
+#include "sensor_msgs/LaserScan.h"
 #include "std_msgs/String.h"
+#include <fstream>
 #include <sstream>
 
 /*
@@ -12,7 +14,22 @@
  * complique; a partir des donnees angulaires et du range, on constuit un message
  * pour chaque ligne de retour, et on l'envoie avec le timestamp.
  */
-int main(int argc, char** argv){
+void Split(const std::string &s, char delim, std::vector<std::string> &elems);
+std::vector<std::string> Split(const std::string &s, char delim);
+std::vector<float> str_to_scan(std::string str);
+
+int main(int argc, char** argv) {
+  if (argc != 2)
+  {
+    // path_to_scan path_to_time
+    std::cout << "Bad number of arguments" << std::endl;
+    return 1;
+  }
+  std::ifstream file_scan(argv[1]);
+  std::ifstream file_scan_time(argv[2]);
+  std::string line_scan;
+  std::string line_time;
+
   ros::init(argc, argv, "laser_scan_publisher");
 
   ros::NodeHandle n;
@@ -25,16 +42,17 @@ int main(int argc, char** argv){
 
   int count = 0;
   ros::Rate r(1.0);
-  while(n.ok()){
+  while(n.ok() && std::getline(file_scan, line_scan) && std::getline(file_scan_time, line_time)){
     //generate some fake data for our laser scan
     for(unsigned int i = 0; i < num_readings; ++i){
       ranges[i] = count;
       intensities[i] = 100 + count;
     }
     // TODO mettre le "faux" temps a la place
-    ros::Time scan_time = ros::Time::now();
+    unsigned int scan_time_UNIX = 0;
+    ros::Time scan_time(scan_time_UNIX);
 
-    //populate the LaserScan message
+    // populate the LaserScan message
     sensor_msgs::LaserScan scan;
     scan.header.stamp = scan_time;
     scan.header.frame_id = "laser_frame";
@@ -58,3 +76,24 @@ int main(int argc, char** argv){
     r.sleep();
   }
 }
+
+// Stack overflow code for splitting string
+void
+Split(const std::string &s, char delim, std::vector<std::string> &elems)
+{
+  std::stringstream ss(s);
+  std::string item;
+  while (std::getline(ss, item, delim)) {
+    elems.push_back(item);
+  }
+}
+
+
+std::vector<std::string>
+Split(const std::string &s, char delim)
+{
+  std::vector<std::string> elems;
+  Split(s, delim, elems);
+  return elems;
+}
+// End of stackoverflow code
