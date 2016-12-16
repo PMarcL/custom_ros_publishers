@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <unistd.h>
 
 using namespace std;
 
@@ -45,7 +46,7 @@ int main(int argc, char **argv)
 	read_imu_data(argv[1], data_frames);
 
   unsigned long i = 0;
-
+	sleep(5);
   while (ros::ok() && i < data_frames.size()) {
 		IMU_data_frame current_frame = data_frames[i];
 		sensor_msgs::Imu imu_msg = sensor_msgs::Imu();

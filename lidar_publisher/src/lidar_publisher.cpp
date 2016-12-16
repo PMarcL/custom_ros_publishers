@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <unistd.h>
 
 /*
  * Premier brainstorm: on a 180 degrees de vision sur chaque laser
@@ -45,10 +46,8 @@ int main(int argc, char** argv) {
 
   int count = 0;
   ros::Rate r(laser_frequency);
-
+  sleep(5);
   while(n.ok() && std::getline(file_scan, line_scan) && std::getline(file_scan_time, line_time)){
-    std::cout << "TEST" << std::endl;
-
     std::vector<std::string> ranges = Split(line_scan, ' ');
     std::cout << "Premiere lecture : " << ranges[0];
     double scan_time_UNIX = std::stod(line_time);
