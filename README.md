@@ -20,7 +20,7 @@ To record the data broadcasted by our publishers and generate a .bag file, you n
 
 #### Terminal 2:
 
-    rosbag -a -x "/rosout(.*)"
+    rosbag record -a -x "/rosout(.*)"
     
 #### Terminal 3:
 
