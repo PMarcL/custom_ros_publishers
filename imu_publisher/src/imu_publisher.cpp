@@ -27,23 +27,26 @@ struct IMU_data_frame {
 	double z;
 };
 
-static const char* IMU_DATA_FILE = "/home/jft/Desktop/custom_ros_publishers/devel/lib/imu_publisher/data/malaga-urban-dataset-extract-15_all-sensors_IMU.txt";
-
 void read_imu_data(const char* filename, vector<IMU_data_frame>& data_frames);
 
 int main(int argc, char **argv)
 {
+	if (argc != 2) {
+		ROS_INFO("Bad number of arguments, killing the publisher without publishing data.");
+		return 1;
+	}
+
   ros::init(argc, argv, "imu_publisher");
   ros::NodeHandle n;
   ros::Publisher imu_publisher = n.advertise<sensor_msgs::Imu>("imu/data_raw", 1000);
   ros::Rate loop_rate(100.001);
 
 	vector<IMU_data_frame> data_frames = vector<IMU_data_frame>();
-	read_imu_data(IMU_DATA_FILE, data_frames);
+	read_imu_data(argv[1], data_frames);
 
   unsigned long i = 0;
 
-  while (ros::ok() && i < data_frames.size())
+  while (!ros::ok() && i < data_frames.size())
 		{
 		IMU_data_frame current_frame = data_frames[i];
 		sensor_msgs::Imu imu_msg = sensor_msgs::Imu();
