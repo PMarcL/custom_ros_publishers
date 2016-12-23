@@ -34,10 +34,10 @@ int main(int argc, char** argv) {
   std::string line_scan;
   std::string line_time;
 
-  ros::init(argc, argv, "laser_scan_publisher");
+  ros::init(argc, argv, "horizontal_laser_2d");
 
   ros::NodeHandle n;
-  ros::Publisher scan_pub = n.advertise<sensor_msgs::LaserScan>("scan", 50);
+  ros::Publisher scan_pub = n.advertise<sensor_msgs::LaserScan>("laser_scan", 50);
 
   unsigned int num_readings = 181;
   double laser_frequency = 75;
@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
     // populate the LaserScan message
     sensor_msgs::LaserScan scan;
     scan.header.stamp = scan_time;
-    scan.header.frame_id = "laser_frame";
+    scan.header.frame_id = "horizontal_laser_link";
     // TODO: verifier avec le referentiel du laser si ca a du sens.
     scan.angle_min = 0;
     scan.angle_max = 3.14159;
@@ -65,7 +65,7 @@ int main(int argc, char** argv) {
     scan.angle_increment = 3.14159 / (num_readings-1);
     scan.time_increment = (1 / laser_frequency) / (num_readings-1);
     scan.range_min = 0.0;
-    scan.range_max = 10.0;
+    scan.range_max = 50.0;
 
     scan.ranges.resize(num_readings);
     // TODO populer a l'aide du fichier texte

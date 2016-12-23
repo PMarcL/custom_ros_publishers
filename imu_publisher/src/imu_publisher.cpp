@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 
   ros::init(argc, argv, "imu_publisher");
   ros::NodeHandle n;
-  ros::Publisher imu_publisher = n.advertise<sensor_msgs::Imu>("imu/data_raw", 1000);
+  ros::Publisher imu_publisher = n.advertise<sensor_msgs::Imu>("imu", 1000);
   ros::Rate loop_rate(100.001);
 
 	vector<IMU_data_frame> data_frames = vector<IMU_data_frame>();
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 		sensor_msgs::Imu imu_msg = sensor_msgs::Imu();
 
 		imu_msg.header.stamp = current_frame.time;
-		imu_msg.header.frame_id = "imu";
+		imu_msg.header.frame_id = "imu_link";
 		imu_msg.linear_acceleration.x = current_frame.x_acc;
 		imu_msg.linear_acceleration.y = current_frame.y_acc;
 		imu_msg.linear_acceleration.z = current_frame.z_acc;
