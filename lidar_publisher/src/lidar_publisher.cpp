@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
 
     // populate the LaserScan message
     sensor_msgs::LaserScan scan;
-    scan.header.stamp = scan_time;
+    scan.header.stamp = ros::Time::now();
     scan.header.frame_id = "horizontal_laser_link";
     // TODO: verifier avec le referentiel du laser si ca a du sens.
     scan.angle_min = 0;
@@ -66,6 +66,7 @@ int main(int argc, char** argv) {
     scan.time_increment = (1 / laser_frequency) / (num_readings-1);
     scan.range_min = 0.0;
     scan.range_max = 50.0;
+    scan.scan_time = 0.025;
 
     scan.ranges.resize(num_readings);
     // TODO populer a l'aide du fichier texte

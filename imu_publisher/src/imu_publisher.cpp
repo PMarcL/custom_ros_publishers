@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 		IMU_data_frame current_frame = data_frames[i];
 		sensor_msgs::Imu imu_msg = sensor_msgs::Imu();
 
-		imu_msg.header.stamp = current_frame.time;
+		imu_msg.header.stamp = ros::Time::now();
 		imu_msg.header.frame_id = "imu_link";
 		imu_msg.linear_acceleration.x = current_frame.x_acc;
 		imu_msg.linear_acceleration.y = current_frame.y_acc;
