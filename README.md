@@ -6,10 +6,10 @@ This repository contains custom ROS publishers made for an introduction to robot
 
 You need to have ROS installed in order to compile this project. We used ROS indigo, but it should work with other distributions. Here's the instructions to setup this package in a catkin workspace:
 
-    mkdir -p catkin_ws/src
-    cd catkin_ws/src
+    mkdir catkin_ws
+    cd catkin_ws
     git clone https://github.com/PMarcL/custom_ros_publishers.git
-    cd ..
+    mv custom_ros_publishers src
     catkin_make
     source devel/setup.bash
 
@@ -25,7 +25,9 @@ To record the data broadcasted by our publishers and generate a .bag file, you n
     
 #### Terminal 3:
 
-    rosrun imu_publisher imu_publisher [path_to_data_file]
+    ./generate_data_file.sh
+    
+You'll need to modify the paths in the Shell script so that they correspond to the location of your data files. Once the publishers are done publishing data, you can stop rosbag in terminal 2 with ctrl+c. The .bag file will be saved in the working directory of terminal 2.
     
 ## References ##
 
